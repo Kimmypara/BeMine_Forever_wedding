@@ -1,0 +1,82 @@
+<?php
+
+//Only for testing
+session_start();
+
+$_SESSION['user_id'] = 1;
+$_SESSION['role_id'] = 1;
+// Only for testing
+
+
+
+header("Access-Control-Allow-Origin: *");
+header("Content-Type: application/json");
+header("Access-Control-Allow-Methods: PUT");
+
+header("Access-Control-Allow-Headers: Access-Control-Allow-Origin, Content-Type, Access-Control-Allow-Methods, Authorization, X-Requested-With");
+
+include_once("../../includes/initialize.php");
+
+define('ROLE_ADMIN', 1);
+define('ROLE_COUPLE', 2);
+define('ROLE_VENDOR', 3);
+
+function requireAdmin(){
+    if(session_status() === PHP_SESSION_NONE){
+        session_start();
+    }
+
+    if(!isset($_SESSION['user_id']) || !isset($_SESSION['role_id'])){
+        http_response_code(401);
+        echo json_encode(array("message" => "Unauthorized"));
+        exit();
+    }
+
+    if((int)$_SESSION['role_id'] !== ROLE_ADMIN){
+        http_response_code(403);
+        echo json_encode(array("message" => "Access denied. Admin only."));
+        exit();
+    }
+}
+
+requireAdmin();
+
+// create a new instance of the Category class
+// This allows us to use its structure and function
+$category = new Category($db);
+//read submitted json data from request body
+$data = json_decode(file_get_contents("php://input"));
+
+// fill in user instance properties with decoded values from request
+$category->category_id  = $data->category_id;
+$category->category_name  = $data->category_name;
+$category->slug  = $data->slug;
+
+
+ // validate
+if (
+    empty($category->category_name) ||
+    empty($category->slug) 
+){
+    http_response_code(400);
+    echo json_encode(array("message" => "Category not updated. Missing or invalid input."));
+}
+elseif(!$category->categoryIdExists()){
+    http_response_code(409);
+    echo json_encode(array("message" => "Category not updated. Category does not exists."));
+}
+elseif($category->categoryNameExists()){
+    http_response_code(409);
+    echo json_encode(array("message" => "Category not updated. Category Name already exists."));
+}
+elseif($category->update()){
+    http_response_code(200);
+    echo json_encode(array("message" => "Category updated."));
+}
+
+else{
+    http_response_code(500);
+    echo json_encode(array("message" => "Server error."));
+}
+
+?>
