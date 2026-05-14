@@ -158,7 +158,7 @@ $shortText = substr($vendor['basic_info'], 0, 120);
             <div class="row">
                 <div class="col-12">
  <div class="mt-auto">
-    <button class="button w-100 align-self-end mt-2">
+    <button class="button w-100 align-self-end mt-2" onclick="openPopup('<?php echo htmlspecialchars($vendor['vendor_name']); ?>')">
         Request a Quotation
     </button>
 </div>
@@ -180,10 +180,62 @@ $shortText = substr($vendor['basic_info'], 0, 120);
 
 </div>
 
+<div id="quotePopup" class="popup-overlay">
 
+    <div class="popup-box">
+
+        <span class="close-popup" onclick="closePopup()">&times;</span>
+
+        <h2 class="subtitle4 mb-2 mt-2">Request for Quotation</h2>
+
+        <form action="" method="POST">
+
+            <input class="subtitle2  mt-1" type="text" id="vendor_name" name="vendor_name" readonly>
+
+            <input class="form4 mt-1" type="text" name="first_name" placeholder="First Name" required>
+
+            <input class="form4 mt-1" type="text" name="last_name" placeholder="Last Name" required>
+
+            <input class="form4 mt-1" type="email" name="email" placeholder="Email" required>
+
+            <input class="form4 mt-1" type="text" name="wedding_date" placeholder="Wedding Date" onfocus="this.type='date'"
+    onblur="if(!this.value)this.type='text'"
+    required
+>
+
+<textarea 
+    class="form4 mt-2 textarea-box"
+    name="quotation_details"
+    placeholder="Write more details about your wedding, preferred style, number of guests, budget, special requests, etc."
+></textarea>
+
+            <button class="button mt-3" type="submit" name="send_quotation" value="save">
+                Send
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
 
 </div>
 </main>
+
+
+<script>
+function openPopup(vendorName){
+    document.getElementById("quotePopup").style.display = "flex";
+    document.getElementById("vendor_name").value = vendorName;
+}
+
+function closePopup(){
+    document.getElementById("quotePopup").style.display = "none";
+}
+</script>
+
+
+
 </body>
 </html>
 

@@ -2,7 +2,7 @@
 //Users Read
     $curl = curl_init();
 
-    curl_setopt($curl, CURLOPT_URL, "http://localhost/BeMine_wedding_website/api/users/read.php");
+    curl_setopt($curl, CURLOPT_URL, "http://localhost/BeMine_Forever_wedding/api/users/read.php");
     curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "GET");
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_HTTPHEADER, [
@@ -20,7 +20,7 @@
 //Category Read
     $curl = curl_init();
 
-    curl_setopt($curl, CURLOPT_URL, "http://localhost/BeMine_wedding_website/api/category/read.php");
+    curl_setopt($curl, CURLOPT_URL, "http://localhost/BeMine_Forever_wedding/api/category/read.php");
     curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "GET");
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_HTTPHEADER, [
@@ -41,7 +41,7 @@
 // Guest read
     $curl = curl_init();
 
-    curl_setopt($curl, CURLOPT_URL, "http://localhost/BeMine_wedding_website/api/guest/read.php");
+    curl_setopt($curl, CURLOPT_URL, "http://localhost/BeMine_Forever_wedding/api/guest/read.php");
     curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "GET");
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_HTTPHEADER, [
@@ -59,7 +59,7 @@
     //Role read
     $curl = curl_init();
 
-    curl_setopt($curl, CURLOPT_URL, "http://localhost/BeMine_wedding_website/api/role/read.php");
+    curl_setopt($curl, CURLOPT_URL, "http://localhost/BeMine_Forever_wedding/api/role/read.php");
     curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "GET");
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_HTTPHEADER, [
@@ -77,7 +77,7 @@
     //Task Read
     $curl = curl_init();
 
-    curl_setopt($curl, CURLOPT_URL, "http://localhost/BeMine_wedding_website/api/task/read.php");
+    curl_setopt($curl, CURLOPT_URL, "http://localhost/BeMine_Forever_wedding/api/task/read.php");
     curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "GET");
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_HTTPHEADER, [
@@ -95,7 +95,7 @@
 // Wedding plan read
     $curl = curl_init();
 
-    curl_setopt($curl, CURLOPT_URL, "http://localhost/BeMine_wedding_website/api/wedding_plan/read.php");
+    curl_setopt($curl, CURLOPT_URL, "http://localhost/BeMine_Forever_wedding/api/wedding_plan/read.php");
     curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "GET");
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_HTTPHEADER, [
@@ -113,7 +113,7 @@
     //Wedding plan task read
     $curl = curl_init();
 
-    curl_setopt($curl, CURLOPT_URL, "http://localhost/BeMine_wedding_website/api/wedding_plan_task/read.php");
+    curl_setopt($curl, CURLOPT_URL, "http://localhost/BeMine_Forever_wedding/api/wedding_plan_task/read.php");
     curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "GET");
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_HTTPHEADER, [
@@ -138,7 +138,7 @@
     $curl = curl_init();
 
     curl_setopt($curl, CURLOPT_URL,
-        "http://localhost/BeMine_wedding_website/api/vendor/readByCategoryId.php?category_id=" . $category_id
+        "http://localhost/BeMine_Forever_wedding/api/vendor/readByCategoryId.php?category_id=" . $category_id
     );
     curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "GET");
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
@@ -172,7 +172,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['create_user'])) {
 
     $curl = curl_init();
 
-    curl_setopt($curl, CURLOPT_URL, "http://localhost/BeMine_wedding_website/api/users/create.php");
+    curl_setopt($curl, CURLOPT_URL, "http://localhost/BeMine_Forever_wedding/api/users/create.php");
     curl_setopt($curl, CURLOPT_POST, true);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_HTTPHEADER, [
@@ -195,6 +195,84 @@ if ($response === false) {
 }
 }
 
+//Wedding Plan Read By User Id(GET)
+$weddingPlanCreateResult = null;
+$existingPlan = null;
+$planExists = false;
+
+$user_id = $_SESSION['user_id'] ?? "";
+$selectedCategories = [];
+
+/* READ EXISTING PLAN */
+if (!empty($user_id)) {
+
+    $curl = curl_init();
+
+    curl_setopt($curl, CURLOPT_URL, "http://localhost/BeMine_Forever_wedding/api/wedding_plan/readByUserId.php?user_id=" . $user_id);
+    curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "GET");
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($curl, CURLOPT_HTTPHEADER, [
+        "Accept: application/json",
+        "Content-Type: application/json"
+    ]);
+  
+
+    $response = curl_exec($curl);
+    curl_close($curl);
+
+    $readResult = json_decode($response, true);
+
+    if (isset($readResult["exists"]) && $readResult["exists"] === true) {
+        $planExists = true;
+        $existingPlan = $readResult["data"];
+        $selectedCategories = $existingPlan["categories"] ?? [];
+    }
+}
+ 
+ // Guest create (POST)
+if (isset($_POST['save_guest'])) {
+
+    $wedding_plan_id = $existingPlan['wedding_plan_id'] ?? null;
+
+    if (!$wedding_plan_id) {
+        $guestCreateResult = ["message" => "Please create your wedding plan first."];
+    } else {
+
+        $data = [
+            "wedding_plan_id" => $wedding_plan_id,
+            "guest_email" => $_POST['guest_email'] ?? "",
+            "guest_name" => $_POST['guest_name'] ?? "",
+            "guest_surname" => $_POST['guest_surname'] ?? "",
+            "guest_category" => $_POST['guest_category'] ?? "",
+            "rsvp_status" => $_POST['rsvp_status'] ?? "pending"
+        ];
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, [
+            CURLOPT_URL => "http://localhost/BeMine_Forever_wedding/api/guest/create.php",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_POSTFIELDS => json_encode($data),
+            CURLOPT_HTTPHEADER => [
+                "Accept: application/json",
+                "Content-Type: application/json"
+            ]
+        ]);
+
+        $guestCreateResponse = curl_exec($curl);
+
+        
+        curl_close($curl);
+
+        $guestCreateResult = json_decode($guestCreateResponse, true);
+
+        if (isset($guestCreateResult["message"]) && $guestCreateResult["message"] === "Guest created.") {
+    header("Location: guest_list.php");
+    exit;
+}
+    }
+}
 
 //User login(POST)
 $loginResult = null;
@@ -209,7 +287,7 @@ if (isset($_POST['login'])) {
     $curl = curl_init();
 
     curl_setopt_array($curl, [
-        CURLOPT_URL => "http://localhost/BeMine_wedding_website/api/users/login.php",
+        CURLOPT_URL => "http://localhost/BeMine_Forever_wedding/api/users/login.php",
         CURLOPT_POST => true,
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_HTTPHEADER => [
@@ -264,39 +342,7 @@ if (isset($_POST['login'])) {
 
 
 
-//Wedding Plan Read By User Id(GET)
-$weddingPlanCreateResult = null;
-$existingPlan = null;
-$planExists = false;
 
-$user_id = $_SESSION['user_id'] ?? "";
-$selectedCategories = [];
-
-/* READ EXISTING PLAN */
-if (!empty($user_id)) {
-
-    $curl = curl_init();
-
-    curl_setopt($curl, CURLOPT_URL, "http://localhost/BeMine_wedding_website/api/wedding_plan/readByUserId.php?user_id=" . $user_id);
-    curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "GET");
-    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($curl, CURLOPT_HTTPHEADER, [
-        "Accept: application/json",
-        "Content-Type: application/json"
-    ]);
-  
-
-    $response = curl_exec($curl);
-    curl_close($curl);
-
-    $readResult = json_decode($response, true);
-
-    if (isset($readResult["exists"]) && $readResult["exists"] === true) {
-        $planExists = true;
-        $existingPlan = $readResult["data"];
-        $selectedCategories = $existingPlan["categories"] ?? [];
-    }
-}
 
 /* Wedding Plan CREATE OR UPDATE */
 if (isset($_POST['save_plan'])) {
@@ -315,10 +361,10 @@ if (isset($_POST['save_plan'])) {
     $curl = curl_init();
 
     if ($planExists) {
-        $url = "http://localhost/BeMine_wedding_website/api/wedding_plan/update.php";
+        $url = "http://localhost/BeMine_Forever_wedding/api/wedding_plan/update.php";
         $method = "PATCH";
     } else {
-        $url = "http://localhost/BeMine_wedding_website/api/wedding_plan/create.php";
+        $url = "http://localhost/BeMine_Forever_wedding/api/wedding_plan/create.php";
         $method = "POST";
     }
 
@@ -341,6 +387,7 @@ if (isset($_POST['save_plan'])) {
     
 
     curl_close($curl);
+    
 }
 
 
@@ -352,7 +399,7 @@ if (!empty($existingPlan['wedding_plan_id'])) {
     $curl = curl_init();
 
     curl_setopt_array($curl, [
-        CURLOPT_URL => "http://localhost/BeMine_wedding_website/api/wedding_plan_task/readByWeddingPlanId.php?wedding_plan_id=" . $existingPlan['wedding_plan_id'],
+        CURLOPT_URL => "http://localhost/BeMine_Forever_wedding/api/wedding_plan_task/readByWeddingPlanId.php?wedding_plan_id=" . $existingPlan['wedding_plan_id'],
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_CUSTOMREQUEST => "GET",
         CURLOPT_HTTPHEADER => [
@@ -391,7 +438,7 @@ if (isset($_POST['save_task'])) {
         $curl = curl_init();
 
         curl_setopt_array($curl, [
-            CURLOPT_URL => "http://localhost/BeMine_wedding_website/api/wedding_plan_task/updateIsCompleted.php",
+            CURLOPT_URL => "http://localhost/BeMine_Forever_wedding/api/wedding_plan_task/updateIsCompleted.php",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_CUSTOMREQUEST => "PATCH",
             CURLOPT_POSTFIELDS => json_encode($data),
