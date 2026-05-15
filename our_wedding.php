@@ -18,7 +18,7 @@ if (isset($_POST['save_task'])) {
 
     $completedTasks = $_POST['completed_tasks'] ?? [];
 
-    foreach ($taskReadResult['data'] as $task) {
+    foreach (($taskReadResult['data'] ?? []) as $task) {
 
         $taskId = $task['wedding_plan_task_id'];
 
@@ -32,7 +32,7 @@ if (isset($_POST['save_task'])) {
         $curl = curl_init();
 
         curl_setopt_array($curl, [
-            CURLOPT_URL => "http://localhost/BeMine_wedding_website/api/wedding_plan_task/updateIsCompleted.php",
+            CURLOPT_URL => "http://localhost/BeMine_Forever_wedding/api/wedding_plan_task/updateIsCompleted.php",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_CUSTOMREQUEST => "PUT",
             CURLOPT_POSTFIELDS => json_encode($data),
@@ -116,7 +116,15 @@ $digits = str_split($moneyLeft);
 
 
 <p class="date">
-    <?php echo date("d F Y", strtotime($existingPlan['wedding_date'])); ?>
+    <?php
+$weddingDate = $existingPlan['wedding_date'] ?? '';
+
+if (!empty($weddingDate)) {
+    echo date("d F Y", strtotime($weddingDate));
+} else {
+    echo "Wedding date not set";
+}
+?>
 </p>
 
     
@@ -184,7 +192,7 @@ $digits = str_split($moneyLeft);
 
 <?php else: ?>
 
-    <p>No planning tasks found. Please select categories from the Planning page first.</p>
+    <p class="date2">No planning tasks found. Please select categories from the Planning page first.</p>
 
 <?php endif; ?>
 

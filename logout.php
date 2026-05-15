@@ -8,5 +8,5 @@ $_SESSION = [];
 session_unset();
 session_destroy();
 
-header("Location: /BeMine_wedding_website/index.php");
+header("Location: /BeMine_Forever_wedding/index.php");
 exit;

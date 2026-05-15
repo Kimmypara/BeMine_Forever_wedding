@@ -31,7 +31,7 @@ if ($category_id > 0) {
 
     $curl = curl_init();
 
-    curl_setopt($curl, CURLOPT_URL, "http://localhost/BeMine_wedding_website/api/vendor/readByCategoryId.php?category_id=" . $category_id);
+    curl_setopt($curl, CURLOPT_URL, "http://localhost/BeMine_Forever_wedding/api/vendor/readByCategoryId.php?category_id=" . $category_id);
     curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "GET");
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_HTTPHEADER, [

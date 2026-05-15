@@ -50,22 +50,30 @@ include "includes/nav.php";
 
         <form action="guest_list.php" method="POST">
 
-            <select name="guest_category" class="form4" required>
-                <option value="" disabled selected>Please select a category</option>
-                <option value="Family of the Bride">Family of the Bride</option>
-                <option value="Family of the Groom">Family of the Groom</option>
-                <option value="Friends">Friends</option>
-                <option value="Work Friends">Work Friends</option>
-                <option value="Other">Other</option>
-            </select>
+            <div class="custom-select">
+    <button type="button" class="select-btn" onclick="toggleGuestDropdown()">
+    <span id="selectedCategory">Please select a category</span>
+    <span class="dropdown-arrow">⌄</span>
+</button>
+
+    <div class="select-options" id="guestDropdown">
+        <div onclick="selectCategory('Family of the Bride')">Family of the Bride</div>
+        <div onclick="selectCategory('Family of the Groom')">Family of the Groom</div>
+        <div onclick="selectCategory('Friends')">Friends</div>
+        <div onclick="selectCategory('Work Friends')">Work Friends</div>
+        <div onclick="selectCategory('Other')">Other</div>
+    </div>
+
+    <input type="hidden" name="guest_category" id="guestCategory">
+</div>
 
            
 
-            <input class="form4 mt-1" type="text" name="guest_name" placeholder="Guest Name" required>
+            <input class="form2 w-100 mt-2" type="text" name="guest_name" placeholder="Guest Name" required>
 
-            <input class="form4 mt-1" type="text" name="guest_surname" placeholder="Guest Surname" required>
+            <input class="form2 w-100 mt-2" type="text" name="guest_surname" placeholder="Guest Surname" required>
 
-            <input class="form4 mt-1" type="email" name="guest_email" placeholder="Guest Email" required>
+            <input class="form2 w-100 mt-2" type="email" name="guest_email" placeholder="Guest Email" required>
 
             <button class="button mt-3" type="submit" name="save_guest" value="save">
                 Save Guest
@@ -92,13 +100,20 @@ if (isset($guestCreateResult['message'])) {
     <?php if (!empty($guestReadResult['data'])): ?>
 
         <?php
-        $groupedGuests = [];
+       $groupedGuests = [];
+$weddingPlanId = $existingPlan['wedding_plan_id'] ?? 0;
 
-        foreach ($guestReadResult['data'] as $guest) {
-            if ((int)$guest['wedding_plan_id'] === (int)$existingPlan['wedding_plan_id']) {
-                $groupedGuests[$guest['guest_category']][] = $guest;
-            }
-        }
+foreach ($guestReadResult['data'] as $guest) {
+
+    if (empty($guest)) {
+        continue;
+    }
+
+    if ((int)($guest['wedding_plan_id'] ?? 0) === (int)$weddingPlanId) {
+        $category = $guest['guest_category'] ?? 'Other';
+        $groupedGuests[$category][] = $guest;
+    }
+}
         ?>
 
         <?php foreach ($groupedGuests as $category => $guests): ?>
@@ -116,13 +131,13 @@ if (isset($guestCreateResult['message'])) {
                     <?php foreach ($guests as $guest): ?>
                         <tr>
                             <td>
-                                <?php echo htmlspecialchars($guest['guest_name'] . " " . $guest['guest_surname']); ?>
+                                <?php echo htmlspecialchars(($guest['guest_name'] ?? '') . " " . ($guest['guest_surname'] ?? '')); ?>
                             </td>
                             <td>
-                                <?php echo htmlspecialchars($guest['guest_email']); ?>
+                                <?php echo htmlspecialchars($guest['guest_email'] ?? ''); ?>
                             </td>
                             <td>
-                                <?php echo htmlspecialchars($guest['rsvp_status']); ?>
+                                <?php echo htmlspecialchars($guest['rsvp_status'] ?? 'Pending'); ?>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -152,7 +167,17 @@ function closePopup(){
     document.getElementById("guestPopup").style.display = "none";
 }
 </script>
+<script>
+function toggleGuestDropdown(){
+    document.getElementById("guestDropdown").classList.toggle("show");
+}
 
+function selectCategory(value){
+    document.getElementById("selectedCategory").innerText = value;
+    document.getElementById("guestCategory").value = value;
+    document.getElementById("guestDropdown").classList.remove("show");
+}
+</script>
 
 </body>
 </html>

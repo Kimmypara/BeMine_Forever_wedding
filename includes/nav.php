@@ -31,7 +31,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
 if (!isset($categoryReadResult)) {
     $curl = curl_init();
 
-    curl_setopt($curl, CURLOPT_URL, "http://localhost/BeMine_wedding_website/api/category/read.php");
+    curl_setopt($curl, CURLOPT_URL, "http://localhost/BeMine_Forever_wedding/api/category/read.php");
     curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "GET");
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_HTTPHEADER, [
