@@ -63,8 +63,17 @@ if (!isset($categoryReadResult)) {
 <body>
 
 
+  <!--advertisement-->
+  <div id="adv1" class="container-fluid">
+    <div class="row px-0">
+      <article class="col-12 text-center">
+        <a class="adv" href="packages.php">Turn Your Dream Wedding Into Reality — Explore Our Packages</a>
+      </article>
+    </div>
+  </div>
 
-  <nav class="navbar mt-0">
+
+  <nav class="navbar mt-0 ">
 
     <div class="nav-banner bg-drop" >
       <picture>
@@ -121,7 +130,6 @@ if (!isset($categoryReadResult)) {
         <li><a href="RSVP.php" role="menuitem">RSVP Website</a></li>
         <li><a href="dinner_tables.php" role="menuitem">Dinner Table Planner</a></li>
          <li><a href="legal_docs.php" role="menuitem">Legal Documents</a></li>
-        <li><a href="testimonials.php" role="menuitem">Testimonials</a></li>
         <li><a href="guest_list.php" role="menuitem">Guest List</a></li>
     </ul>
 </li>
@@ -170,10 +178,10 @@ if (!isset($categoryReadResult)) {
     </li>
 
     <li>
-        <a href="honeymoon.php"
-           class="nav-link <?php if ($currentPage == 'honeymoon.php') echo 'active'; ?>">
+        <a href="packages.php"
+           class="nav-link <?php if ($currentPage == 'packages.php') echo 'active'; ?>">
 
-           Honeymoon
+           Packages
 
         </a>
     </li>

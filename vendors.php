@@ -74,7 +74,7 @@ include "includes/nav.php";
 
     <div class="col-lg-6 col-md-6 col-sm-12 mb-4 d-flex">
 
-        <div class="vendor-card card p-3 d-flex flex-column w-100">
+        <div class="vendor-card card p-2 d-flex flex-column w-100">
 
             <div id="carouselVendor<?php echo $vendor['vendor_id']; ?>" class="carousel slide">
 

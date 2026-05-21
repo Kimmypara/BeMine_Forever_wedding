@@ -1,15 +1,4 @@
-<?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-
-if (!isset($_SESSION['user_id']) || (int)$_SESSION['role_id'] !== 2) {
-    header("Location: login.php");
-    exit;
-}
-
-include "includes/nav.php";
-?>
+<?php include "includes/nav.php"; ?>
 
 
 <style>
@@ -77,6 +66,40 @@ So why choose Be Mine Forever? Because it is more than just a planning tool. It 
 
     </div>
 
+    
+
+    <section class="container w-100 my-5">
+  
+<h2 class="subtitle">Testimonials</h2>
+  <div id="reviewCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+
+      <div class="carousel-item active text-center">
+        <p class="review-text p-5">“Be Mine Forever made our wedding planning feel simple, organised, and magical.”</p>
+        <h5 class="mt-3">Sarah & Luke</h5>
+      </div>
+
+      <div class="carousel-item text-center">
+        <p class="review-text p-5">“Everything we needed was in one place. It saved us so much stress.”</p>
+        <h5 class="mt-3">Emma & Jake</h5>
+      </div>
+
+      <div class="carousel-item text-center">
+        <p class="review-text p-5">“The platform helped us keep track of our budget, vendors, and wedding tasks beautifully.”</p>
+        <h5 class="mt-3">Nicole & Daniel</h5>
+      </div>
+
+    </div>
+
+    <button class="carousel-control-prev" type="button" data-bs-target="#reviewCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon"></span>
+    </button>
+
+    <button class="carousel-control-next" type="button" data-bs-target="#reviewCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon"></span>
+    </button>
+  </div>
+</section>
 
 
 </div>
