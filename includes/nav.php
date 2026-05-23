@@ -5,7 +5,9 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 
+
 include_once(__DIR__ . "/initialize.php");
+include "includes/chat_planner.php";
 
 $role_id    = $_SESSION['role_id'] ?? null;
 

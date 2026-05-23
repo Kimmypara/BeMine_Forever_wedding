@@ -184,13 +184,13 @@ $shortText = substr($vendor['basic_info'], 0, 120);
 
     <div class="popup-box">
 
-        <span class="close-popup" onclick="closePopup()">&times;</span>
+        <span class="close-popup2" onclick="closePopup()">&times;</span>
 
         <h2 class="subtitle4 mb-2 mt-2">Request for Quotation</h2>
 
         <form action="" method="POST">
 
-            <input class="subtitle2  mt-1" type="text" id="vendor_name" name="vendor_name" readonly>
+            <input class="subtitle6  mt-1" type="text" id="vendor_name" name="vendor_name" readonly>
 
             <input class="form4 mt-1" type="text" name="first_name" placeholder="First Name" required>
 
