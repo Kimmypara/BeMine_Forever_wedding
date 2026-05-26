@@ -28,29 +28,85 @@ include "includes/nav.php";
     <main class="main-content">
 <div class="container">
 <h1 class="title">Wedding Table Layouts</h1>
-<h3 class="subtitle4 mb-5">Choose your Style</h3>
-<div class="row align-items-stretch">
+<h3 class="subtitle4 mb-5">Select your preferred reception layout before arranging guests.</h3>
 
- <div class="col-lg-4 col-md-6 col-sm-12 d-flex">
-        <div class="table-card pb-3 pt-3 d-flex flex-column w-100">
-        <a href="round_table.php"><img src="assets/images/round_table.png" class="photo d-block w-100 mb-4" alt=""></a>
+
+
+    <div class="table-setup-grid">
+
+        <!-- ROUND TABLE -->
+
+        <div class="setup-card">
+
+            <img class="dinner-tables" src="assets/images/round_table.png" alt="Round Tables">
+
+            <div class="setup-content">
+
+                <h3>Round Tables</h3>
+
+                <p>
+                    Classic wedding layout ideal for conversation and elegant receptions.
+                </p>
+
+                <button class="button w-100">
+                    Choose Layout
+                </button>
+
+            </div>
+
         </div>
-    </div>
 
+        <!-- LONG TABLE -->
 
-    <div class="col-lg-4 col-md-6 col-sm-12 d-flex">
-        <div class=" table-card pb-3 pt-5  d-flex flex-column w-100">
-        <a href="ambassador_table.php"><img src="assets/images/ambassador_table.png" class="photo d-block w-100 mb-4" alt=""></a>
+        <div class="setup-card">
+
+            <img src="assets/images/ambassador_table.png" alt="Long Banquet Tables">
+
+            <div class="setup-content">
+
+                <h3>Ambassador Tables</h3>
+
+                <p>
+                    Elegant family-style seating perfect for luxury weddings.
+                </p>
+
+                <button class="button w-100">
+                    Choose Layout
+                </button>
+
+            </div>
+
         </div>
-    </div>
 
-   
+        <!-- U SHAPE -->
 
-    <div class="col-lg-4 col-md-6 col-sm-12 d-flex">
-        <div class="table-card pb-3 pt-3  d-flex flex-column w-100">
-        <a href="dinner_dance.php"><img src="assets/images/dinner_dance.png" class="photo d-block w-100 mb-4" alt=""></a>
+        <div class="setup-card">
+
+            <img src="assets/images/dinner_dance.png" alt="U Shape Setup">
+
+            <div class="setup-content">
+
+                <h3>Dinner Dance style</h3>
+
+                <p>
+                    Ideal for lively wedding receptions with a dedicated dance floor and entertainment area.
+                </p>
+
+                <button class="button w-100">
+                    Choose Layout
+                </button>
+
+            </div>
+
         </div>
-    </div>
+
+      
+
+
+
+
+
+
 
       
 </div>
