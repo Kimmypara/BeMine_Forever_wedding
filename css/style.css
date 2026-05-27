@@ -2555,6 +2555,89 @@ select.form2{
         align-items: center;
         justify-content: center;
     }
+
+     .table-setup-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 15px;
+        width: 100%;
+        overflow: hidden;
+    }
+
+  .theme-options {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 15px;
+        width: 100%;
+        overflow: hidden;
+    }
+
+    .theme-card {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    .rsvp-builder-card {
+        overflow: hidden;
+    }
+
+    @media (max-width: 768px) {
+
+    .packages-section {
+        padding-top: 80px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .packages-section .title {
+        font-size: 28px;
+    }
+
+    .subtitle5 {
+        font-size: 16px;
+        line-height: 1.5;
+    }
+
+    .table-responsive {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 10px;
+    }
+
+    .package-table {
+        min-width: 760px;
+        font-size: 14px;
+    }
+
+    .package-table th,
+    .package-table td {
+        padding: 12px 10px;
+        white-space: nowrap;
+    }
+
+    .package-title {
+        height: 6rem;
+    }
+
+    .package-title h3 {
+        font-size: 18px;
+    }
+
+    .package-title span {
+        font-size: 15px;
+    }
+
+    .popular-badge {
+        font-size: 12px;
+        margin-top: 8px;
+    }
+
+    .package-table .button {
+        font-size: 13px;
+        padding: 10px 12px;
+    }
+}
 }
 
 
