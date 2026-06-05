@@ -716,7 +716,7 @@ a:hover .social-icon {
     color: var(--text-color);
     outline: none !important;
      border: none;
-     font-size: 1.1rem;
+     font-size: .9rem;
      font-weight: bold;
      justify-content: center;
      padding: .5rem;
@@ -733,7 +733,7 @@ a:hover .social-icon {
     color: var(--text-color);
     outline: none !important;
      border: none;
-     font-size: 1.1rem;
+     font-size: 0.9rem;
      font-weight: bold;
      justify-content: center;
      padding: .5rem;
